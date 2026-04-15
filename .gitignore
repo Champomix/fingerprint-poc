@@ -1,0 +1,23 @@
+# Node modules
+backend/node_modules/
+frontend/node_modules/
+
+# Angular build
+frontend/dist/
+
+# Data générée
+backend/src/data/fingerprints.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
