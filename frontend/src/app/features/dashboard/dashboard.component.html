@@ -1,0 +1,229 @@
+<div class="dashboard-container">
+
+  <div class="dashboard-header">
+    <h1>📊 Dashboard - Fingerprints</h1>
+    <div class="header-actions">
+      <button (click)="loadAll()" class="btn btn-secondary" [disabled]="isLoading()">
+        🔄 Actualiser
+      </button>
+      <button (click)="deleteAll()" class="btn btn-danger"
+              [disabled]="fingerprints().length === 0">
+        🗑️ Tout supprimer
+      </button>
+    </div>
+  </div>
+
+  <!-- Error -->
+  @if (errorMessage()) {
+    <div class="error-banner">
+      ⚠️ {{ errorMessage() }}
+    </div>
+  }
+
+  <!-- Loading -->
+  @if (isLoading()) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Chargement des données...</p>
+    </div>
+  }
+
+  <!-- Stats Cards -->
+  @if (stats() && !isLoading()) {
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">{{ stats()!.totalVisitors }}</div>
+        <div class="stat-label">Visiteurs uniques</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-value">{{ stats()!.totalVisits }}</div>
+        <div class="stat-label">Total visites</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-value">{{ (stats()!.avgConfidence * 100) | number:'1.0-1' }}%</div>
+        <div class="stat-label">Confidence moyenne</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div class="stat-value">{{ getStatEntries(stats()!.componentsCoverage).length }}</div>
+        <div class="stat-label">Types de composants</div>
+      </div>
+    </div>
+
+    <!-- Charts / Stats détaillées -->
+    <div class="charts-grid">
+
+      <div class="chart-card">
+        <h3>🌐 Navigateurs</h3>
+        @for (item of getStatEntries(stats()!.browsers); track item.key) {
+          <div class="bar-item">
+            <span class="bar-label">{{ item.key }}</span>
+            <div class="bar-track">
+              <div class="bar-fill"
+                   [style.width.%]="(item.value / stats()!.totalVisitors) * 100">
+              </div>
+            </div>
+            <span class="bar-count">{{ item.value }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="chart-card">
+        <h3>💻 Systèmes d'exploitation</h3>
+        @for (item of getStatEntries(stats()!.operatingSystems); track item.key) {
+          <div class="bar-item">
+            <span class="bar-label">{{ item.key }}</span>
+            <div class="bar-track">
+              <div class="bar-fill bar-fill-cyan"
+                   [style.width.%]="(item.value / stats()!.totalVisitors) * 100">
+              </div>
+            </div>
+            <span class="bar-count">{{ item.value }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="chart-card">
+        <h3>🕐 Fuseaux horaires</h3>
+        @for (item of getStatEntries(stats()!.timezones).slice(0, 5); track item.key) {
+          <div class="bar-item">
+            <span class="bar-label small">{{ item.key }}</span>
+            <div class="bar-track">
+              <div class="bar-fill bar-fill-orange"
+                   [style.width.%]="(item.value / stats()!.totalVisitors) * 100">
+              </div>
+            </div>
+            <span class="bar-count">{{ item.value }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="chart-card">
+        <h3>📺 Résolutions</h3>
+        @for (item of getStatEntries(stats()!.screenResolutions).slice(0, 5); track item.key) {
+          <div class="bar-item">
+            <span class="bar-label">{{ item.key }}</span>
+            <div class="bar-track">
+              <div class="bar-fill bar-fill-green"
+                   [style.width.%]="(item.value / stats()!.totalVisitors) * 100">
+              </div>
+            </div>
+            <span class="bar-count">{{ item.value }}</span>
+          </div>
+        }
+      </div>
+
+    </div>
+  }
+
+  <!-- Fingerprints List -->
+  <div class="fp-list-section">
+    <div class="section-header">
+      <h2>🗂️ Fingerprints enregistrés</h2>
+      <span class="badge">{{ fingerprints().length }} entrées</span>
+    </div>
+
+    @if (fingerprints().length === 0 && !isLoading()) {
+      <div class="empty-state">
+        <span>🔍</span>
+        <p>Aucun fingerprint enregistré.<br>
+           Visitez la <a href="/">page d'accueil</a> pour démarrer le tracking.
+        </p>
+      </div>
+    }
+
+    @for (fp of fingerprints(); track fp._id) {
+      <div class="fp-item" [class.fp-item-active]="selectedFingerprint()?._id === fp._id">
+
+        <!-- Summary Row -->
+        <div class="fp-summary" (click)="selectFingerprint(fp)">
+          <div class="fp-id-info">
+            <code class="fp-visitor-id">{{ truncateId(fp.visitorId) }}</code>
+            @if ((fp.metadata?.visits || 1) > 1) {
+              <span class="visits-badge">{{ fp.metadata.visits }} visites</span>
+            }
+          </div>
+          <div class="fp-meta">
+            <span>🕐 {{ formatDate(fp.metadata?.lastSeen) }}</span>
+            <span>🎯 {{ ((fp.confidence?.score || 0) * 100) | number:'1.0-0' }}%</span>
+            <span>📦 {{ getComponentEntries(fp).length }} composants</span>
+            <span>🌐 {{ fp.httpInfo?.userAgent?.substring(0, 30) }}...</span>
+          </div>
+          <span class="expand-icon">
+            {{ selectedFingerprint()?._id === fp._id ? '▲' : '▼' }}
+          </span>
+        </div>
+
+        <!-- Detail Panel -->
+        @if (selectedFingerprint()?._id === fp._id) {
+          <div class="fp-detail">
+
+            <!-- Infos générales -->
+            <div class="detail-block">
+              <h4>📋 Informations générales</h4>
+              <div class="detail-grid">
+                <div class="detail-item">
+                  <span class="detail-key">Visitor ID</span>
+                  <code class="detail-val">{{ fp.visitorId }}</code>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">Confidence</span>
+                  <span class="detail-val">{{ ((fp.confidence?.score || 0) * 100) | number:'1.0-2' }}%</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">Première visite</span>
+                  <span class="detail-val">{{ formatDate(fp.metadata?.firstSeen) }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">Dernière visite</span>
+                  <span class="detail-val">{{ formatDate(fp.metadata?.lastSeen) }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">Nombre de visites</span>
+                  <span class="detail-val">{{ fp.metadata?.visits || 1 }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">IP</span>
+                  <span class="detail-val">{{ fp.httpInfo?.ip || 'N/A' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- HTTP Info -->
+            <div class="detail-block">
+              <h4>🌐 Informations HTTP</h4>
+              <div class="detail-item full-width">
+                <span class="detail-key">User Agent</span>
+                <span class="detail-val small">{{ fp.httpInfo?.userAgent || 'N/A' }}</span>
+              </div>
+              <div class="detail-item full-width">
+                <span class="detail-key">Accept-Language</span>
+                <span class="detail-val">{{ fp.httpInfo?.acceptLanguage || 'N/A' }}</span>
+              </div>
+            </div>
+
+            <!-- Composants FingerprintJS -->
+            <div class="detail-block">
+              <h4>📦 Composants FingerprintJS ({{ getComponentEntries(fp).length }})</h4>
+              <div class="components-table">
+                @for (comp of getComponentEntries(fp); track comp.key) {
+                  <div class="comp-row">
+                    <span class="comp-label">{{ comp.label }}</span>
+                    <code class="comp-key">{{ comp.key }}</code>
+                    <span class="comp-value">{{ formatValue(comp.value) }}</span>
+                    <span class="comp-duration">{{ comp.duration }}ms</span>
+                  </div>
+                }
+              </div>
+            </div>
+
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+</div>

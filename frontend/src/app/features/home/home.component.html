@@ -1,0 +1,91 @@
+<div class="home-container">
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>🔍 FingerprintJS Tracker</h1>
+    <p>Analyse et trace votre empreinte numérique en temps réel</p>
+  </section>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <p>Collecte de votre empreinte digitale en cours...</p>
+      <small>Analyse de {{ 35 }} composants du navigateur</small>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error()) {
+    <div class="error-card">
+      <span>❌</span>
+      <p>Erreur : {{ error() }}</p>
+      <button (click)="startTracking()" class="btn btn-primary">Réessayer</button>
+    </div>
+  }
+
+  <!-- Result -->
+  @if (currentFingerprint() && !isLoading()) {
+    <div class="result-section">
+
+      <!-- Visitor ID Card -->
+      <div class="id-card">
+        <div class="id-card-header">
+          <span class="status-dot"></span>
+          <span>Empreinte collectée avec succès</span>
+          @if (serverResponse?.visits > 1) {
+            <span class="visit-badge">Visite n°{{ serverResponse.visits }}</span>
+          }
+        </div>
+        <div class="id-card-body">
+          <div class="visitor-id">
+            <label>Visitor ID</label>
+            <code>{{ currentFingerprint()!.visitorId }}</code>
+          </div>
+          <div class="confidence">
+            <label>Confidence Score</label>
+            <div class="confidence-bar">
+              <div
+                class="confidence-fill"
+                [style.width.%]="(currentFingerprint()!.confidence.score || 0) * 100">
+              </div>
+            </div>
+            <span>{{ ((currentFingerprint()!.confidence.score || 0) * 100) | number:'1.0-1' }}%</span>
+          </div>
+        </div>
+        <div class="id-card-footer">
+          <span>📦 {{ getComponentEntries(currentFingerprint()!).length }} composants collectés</span>
+          @if (serverResponse) {
+            <span class="server-ok">✅ Envoyé au serveur</span>
+          }
+        </div>
+      </div>
+
+      <!-- Components Grid -->
+      <div class="components-section">
+        <h2>📋 Composants collectés</h2>
+        <div class="components-grid">
+          @for (comp of getComponentEntries(currentFingerprint()!); track comp.key) {
+            <div class="component-card">
+              <div class="component-label">{{ comp.label }}</div>
+              <div class="component-key"><code>{{ comp.key }}</code></div>
+              <div class="component-value">{{ formatValue(comp.value) }}</div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button (click)="startTracking()" class="btn btn-secondary">
+          🔄 Recollecte
+        </button>
+        <a routerLink="/dashboard" class="btn btn-primary">
+          📊 Voir le Dashboard
+        </a>
+      </div>
+
+    </div>
+  }
+
+</div>
