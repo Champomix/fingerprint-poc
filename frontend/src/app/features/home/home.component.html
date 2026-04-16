@@ -11,7 +11,7 @@
     <div class="loading-card">
       <div class="spinner"></div>
       <p>Collecte de votre empreinte digitale en cours...</p>
-      <small>Analyse de {{ 35 }} composants du navigateur</small>
+      <small>Analyse des composants du navigateur...</small>
     </div>
   }
 
@@ -37,6 +37,7 @@
             <span class="visit-badge">Visite n°{{ serverResponse.visits }}</span>
           }
         </div>
+
         <div class="id-card-body">
           <div class="visitor-id">
             <label>Visitor ID</label>
@@ -50,9 +51,12 @@
                 [style.width.%]="(currentFingerprint()!.confidence.score || 0) * 100">
               </div>
             </div>
-            <span>{{ ((currentFingerprint()!.confidence.score || 0) * 100) | number:'1.0-1' }}%</span>
+            <span class="confidence-value">
+              {{ ((currentFingerprint()!.confidence.score || 0) * 100) | number:'1.0-1' }}%
+            </span>
           </div>
         </div>
+
         <div class="id-card-footer">
           <span>📦 {{ getComponentEntries(currentFingerprint()!).length }} composants collectés</span>
           @if (serverResponse) {
@@ -68,7 +72,9 @@
           @for (comp of getComponentEntries(currentFingerprint()!); track comp.key) {
             <div class="component-card">
               <div class="component-label">{{ comp.label }}</div>
-              <div class="component-key"><code>{{ comp.key }}</code></div>
+              <div class="component-key">
+                <code>{{ comp.key }}</code>
+              </div>
               <div class="component-value">{{ formatValue(comp.value) }}</div>
             </div>
           }
