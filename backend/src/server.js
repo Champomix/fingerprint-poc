@@ -6,6 +6,7 @@ const path = require('path');
 const fse = require('fs-extra');
 
 const fingerprintRoutes = require('./routes/fingerprint.routes');
+const fingerprintProRoutes = require('./routes/fingerprint-pro.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -34,6 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api', fingerprintRoutes);
+app.use('/api', fingerprintProRoutes);
 
 // Route de santé
 app.get('/health', (req, res) => {

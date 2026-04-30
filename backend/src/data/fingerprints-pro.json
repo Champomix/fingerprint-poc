@@ -1,0 +1,70 @@
+{
+  "fingerprints": [
+    {
+      "requestId": "1777314251166.Ot0ojD",
+      "visitorId": "sI1GjpYVgpC8mtTFa0ZT",
+      "confidence": {
+        "revision": "v1.1",
+        "score": 1
+      },
+      "visitorFound": true,
+      "incognito": false,
+      "browserName": "Firefox",
+      "browserVersion": "149.0",
+      "os": "Mac OS X",
+      "osVersion": "10.15",
+      "device": "Other",
+      "ip": "92.132.246.54",
+      "firstSeenAt": {
+        "global": "2026-04-27T18:22:52.751Z",
+        "subscription": "2026-04-27T18:22:52.751Z"
+      },
+      "lastSeenAt": {
+        "global": "2026-04-27T18:22:52.751Z",
+        "subscription": "2026-04-27T18:22:52.751Z"
+      },
+      "serverVerification": {
+        "visitorId": "sI1GjpYVgpC8mtTFa0ZT",
+        "confidence": 1,
+        "verified": true,
+        "timestamp": 1777319257062
+      },
+      "timestamp": "2026-04-27T19:13:29.659Z",
+      "visits": 53,
+      "lastSeen": "2026-04-27T19:59:26.042Z"
+    },
+    {
+      "requestId": "1777318289298.9FG3g1",
+      "visitorId": "pX5njG0VwJ8UihJznrrG",
+      "confidence": {
+        "revision": "v1.1",
+        "score": 1
+      },
+      "visitorFound": false,
+      "incognito": false,
+      "browserName": "Chrome",
+      "browserVersion": "147.0.0",
+      "os": "Mac OS X",
+      "osVersion": "10.15.7",
+      "device": "Other",
+      "ip": "185.246.211.90",
+      "firstSeenAt": {
+        "global": "2026-04-27T19:31:29.312Z",
+        "subscription": "2026-04-27T19:31:29.312Z"
+      },
+      "lastSeenAt": {
+        "global": null,
+        "subscription": null
+      },
+      "serverVerification": {
+        "visitorId": "pX5njG0VwJ8UihJznrrG",
+        "confidence": 1,
+        "verified": true,
+        "timestamp": 1777453892759
+      },
+      "timestamp": "2026-04-27T19:31:29.430Z",
+      "visits": 14,
+      "lastSeen": "2026-04-29T09:11:32.966Z"
+    }
+  ]
+}

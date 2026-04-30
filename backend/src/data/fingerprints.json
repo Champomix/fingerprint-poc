@@ -9,7 +9,7 @@
       },
       "components": {
         "userAgentData": {
-          "duration": 17,
+          "duration": 22,
           "error": null
         },
         "fonts": {
@@ -19,11 +19,11 @@
             "Helvetica Neue",
             "Menlo"
           ],
-          "duration": 20,
+          "duration": 25,
           "error": null
         },
         "domBlockers": {
-          "duration": 14,
+          "duration": 13,
           "error": null
         },
         "fontPreferences": {
@@ -36,12 +36,12 @@
             "min": 9.23333740234375,
             "system": 146
           },
-          "duration": 15,
+          "duration": 14,
           "error": null
         },
         "audio": {
           "value": 35.74996626004577,
-          "duration": 0,
+          "duration": 1,
           "error": null
         },
         "screenFrame": {
@@ -83,7 +83,7 @@
           "error": null
         },
         "deviceMemory": {
-          "duration": 1,
+          "duration": 0,
           "error": null
         },
         "screenResolution": {
@@ -101,7 +101,7 @@
         },
         "timezone": {
           "value": "Europe/Paris",
-          "duration": 0,
+          "duration": 1,
           "error": null
         },
         "sessionStorage": {
@@ -339,7 +339,7 @@
             "rendererUnmasked": "",
             "shadingLanguageVersion": "WebGL GLSL ES 1.0"
           },
-          "duration": 8,
+          "duration": 9,
           "error": null
         },
         "webGlExtensions": {
@@ -770,7 +770,7 @@
             ],
             "unsupportedExtensions": []
           },
-          "duration": 2,
+          "duration": 4,
           "error": null
         }
       },
@@ -782,10 +782,10 @@
       },
       "metadata": {
         "firstSeen": "2026-04-15T11:16:32.058Z",
-        "lastSeen": "2026-04-15T16:30:18.417Z",
-        "visits": 15,
+        "lastSeen": "2026-04-27T19:31:06.446Z",
+        "visits": 29,
         "createdAt": "2026-04-15T11:16:32.058Z",
-        "updatedAt": "2026-04-15T16:30:18.417Z"
+        "updatedAt": "2026-04-27T19:31:06.446Z"
       }
     }
   ]

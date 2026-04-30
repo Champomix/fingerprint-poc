@@ -1,0 +1,52 @@
+<div class="menu-container">
+  <header class="menu-header">
+    <h1>🔐 POC FingerprintJS</h1>
+    <p class="subtitle">Choisissez la version à tester</p>
+  </header>
+
+  <div class="cards-container">
+    <!-- Carte Version Gratuite -->
+    <div class="card card-free">
+      <div class="card-icon">🆓</div>
+      <h2>Version Gratuite</h2>
+      <p class="card-label">Open Source</p>
+      
+      <ul class="features-list">
+        <li>✅ Identification navigateur</li>
+        <li>✅ ~60 composants collectés</li>
+        <li>✅ VisitorId généré localement</li>
+        <li>✅ Gratuit et sans limite</li>
+      </ul>
+
+      <a routerLink="/free" class="btn btn-free">
+        Essayer la version gratuite
+      </a>
+    </div>
+
+    <!-- Carte Version Pro -->
+    <div class="card card-pro">
+      <div class="card-icon">💎</div>
+      <h2>Version Pro</h2>
+      <p class="card-label">Professional</p>
+      
+      <ul class="features-list">
+        <li>✨ Identification serveur (99.5% précision)</li>
+        <li>✨ Détection incognito/VPN/bots</li>
+        <li>✨ Géolocalisation avancée</li>
+        <li>✨ Historique des visites</li>
+        <li>✨ Score de confiance amélioré</li>
+      </ul>
+
+      <a routerLink="/pro" class="btn btn-pro">
+        Essayer la version Pro
+      </a>
+    </div>
+  </div>
+
+  <footer class="menu-footer">
+    <p>
+      <a href="https://fingerprint.com/github/" target="_blank">Documentation FingerprintJS</a> | 
+      <a href="https://dashboard.fingerprint.com/" target="_blank">Dashboard Pro</a>
+    </p>
+  </footer>
+</div>

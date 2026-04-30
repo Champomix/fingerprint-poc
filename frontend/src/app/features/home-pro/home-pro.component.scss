@@ -1,0 +1,114 @@
+@import '../home/home.component.scss';
+
+// Override pour la version Pro
+.pro-version {
+  .hero {
+    background: linear-gradient(135deg, #FF9800 0%, #FF6B00 100%);
+
+    .back-link {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+
+      a {
+        color: white;
+        text-decoration: none;
+        font-size: 0.95rem;
+        opacity: 0.9;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 1;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .pro-card {
+    border-left: 4px solid #FF9800;
+  }
+
+  .pro-dot {
+    background: linear-gradient(135deg, #FF9800 0%, #FF6B00 100%);
+  }
+
+  .pro-badge {
+    background: linear-gradient(135deg, #FF9800 0%, #FF6B00 100%);
+  }
+
+  .new-badge {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  }
+
+  .pro-fill {
+    background: linear-gradient(90deg, #FF9800 0%, #FF6B00 100%);
+  }
+
+  .request-id {
+    font-size: 0.85rem;
+    color: #666;
+  }
+}
+
+// Section des fonctionnalités Pro
+.pro-features-section {
+  margin-top: 2rem;
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+  }
+}
+
+.pro-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-label {
+    font-size: 0.85rem;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-value {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+
+    &.small {
+      font-size: 0.85rem;
+    }
+
+    &.highlight {
+      color: #FF6B00;
+      font-weight: 600;
+    }
+  }
+}

@@ -1,0 +1,169 @@
+<div class="home-container pro-version">
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="back-link">
+      <a routerLink="/">← Retour au menu</a>
+    </div>
+    <h1>💎 FingerprintJS Pro</h1>
+    <p>Identification avancée avec détection incognito, VPN et géolocalisation</p>
+  </section>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <p>Identification Pro en cours...</p>
+      <small>Analyse avancée avec l'API FingerprintJS Pro...</small>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error()) {
+    <div class="error-card">
+      <span>❌</span>
+      <p>Erreur : {{ error() }}</p>
+      <button (click)="startTracking()" class="btn btn-primary">Réessayer</button>
+    </div>
+  }
+
+  <!-- Result -->
+  @if (currentFingerprint() && !isLoading()) {
+    <div class="result-section">
+
+      <!-- Visitor ID Card -->
+      <div class="id-card pro-card">
+        <div class="id-card-header">
+          <span class="status-dot pro-dot"></span>
+          <span>Identification Pro réussie</span>
+          @if (currentFingerprint()!.visitorFound) {
+            <span class="visit-badge pro-badge">Visiteur connu</span>
+          } @else {
+            <span class="visit-badge new-badge">Nouveau visiteur</span>
+          }
+        </div>
+
+        <div class="id-card-body">
+          <div class="visitor-id">
+            <label>Visitor ID Pro</label>
+            <code>{{ currentFingerprint()!.visitorId }}</code>
+          </div>
+          <div class="visitor-id">
+            <label>Request ID</label>
+            <code class="request-id">{{ currentFingerprint()!.requestId }}</code>
+          </div>
+          <div class="confidence">
+            <label>Confidence Score</label>
+            <div class="confidence-bar">
+              <div
+                class="confidence-fill pro-fill"
+                [style.width.%]="(currentFingerprint()!.confidence.score || 0) * 100">
+              </div>
+            </div>
+            <span class="confidence-value">
+              {{ ((currentFingerprint()!.confidence.score || 0) * 100) | number:'1.0-1' }}%
+            </span>
+          </div>
+        </div>
+
+        <div class="id-card-footer">
+          @if (serverResponse) {
+            <span class="server-ok">✅ Vérifié côté serveur</span>
+          }
+        </div>
+      </div>
+
+      <!-- Pro Features Grid -->
+      <div class="pro-features-section">
+        <h2>✨ Fonctionnalités Pro</h2>
+        <div class="pro-features-grid">
+          
+          <!-- Incognito Detection -->
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <div class="feature-label">Mode Incognito</div>
+            <div class="feature-value" [class.highlight]="currentFingerprint()!.incognito">
+              {{ currentFingerprint()!.incognito ? 'Détecté ⚠️' : 'Non détecté ✅' }}
+            </div>
+          </div>
+
+          <!-- Browser Info -->
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <div class="feature-label">Navigateur</div>
+            <div class="feature-value">
+              {{ currentFingerprint()!.browserName }} {{ currentFingerprint()!.browserVersion }}
+            </div>
+          </div>
+
+          <!-- OS Info -->
+          <div class="feature-card">
+            <div class="feature-icon">💻</div>
+            <div class="feature-label">Système</div>
+            <div class="feature-value">
+              {{ currentFingerprint()!.os }} {{ currentFingerprint()!.osVersion }}
+            </div>
+          </div>
+
+          <!-- Device -->
+          <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <div class="feature-label">Appareil</div>
+            <div class="feature-value">
+              {{ currentFingerprint()!.device }}
+            </div>
+          </div>
+
+          <!-- IP Address -->
+          <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <div class="feature-label">Adresse IP</div>
+            <div class="feature-value">
+              {{ currentFingerprint()!.ip }}
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="feature-card">
+            <div class="feature-icon">📍</div>
+            <div class="feature-label">Localisation</div>
+            <div class="feature-value">
+              {{ getLocationString(currentFingerprint()!) }}
+            </div>
+          </div>
+
+          <!-- First Seen -->
+          <div class="feature-card">
+            <div class="feature-icon">⏰</div>
+            <div class="feature-label">Première visite</div>
+            <div class="feature-value small">
+              {{ formatDate(currentFingerprint()!.firstSeenAt?.global) }}
+            </div>
+          </div>
+
+          <!-- Last Seen -->
+          <div class="feature-card">
+            <div class="feature-icon">🕐</div>
+            <div class="feature-label">Dernière visite</div>
+            <div class="feature-value small">
+              {{ formatDate(currentFingerprint()!.lastSeenAt?.global) }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <a routerLink="/" class="btn btn-secondary">
+          ← Retour au menu
+        </a>
+        <button (click)="startTracking()" class="btn btn-primary">
+          🔄 Réidentifier
+        </button>
+      </div>
+
+    </div>
+  }
+
+</div>
